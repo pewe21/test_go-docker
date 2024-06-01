@@ -1,0 +1,23 @@
+version: '3'
+services:
+  test_go-postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=rizki
+      - POSTGRES_PASSWORD=rahasia
+      - POSTGRES_DB=test_go
+
+  test_go-backend:
+    build: .
+    ports:
+      - 3000:3001
+    environment:
+      - DB_USER=rizki
+      - DB_PASSWORD=rahasia
+      - DB_HOST=test_go-postgres
+      - DB_PORT=5432
+      - DB_DATABASE=test_go
+    depends_on:
+      - test_go-postgres
